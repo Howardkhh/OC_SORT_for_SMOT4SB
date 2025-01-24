@@ -147,3 +147,6 @@ dance_detections/
 
 # IDE
 .vs
+
+# data
+datasets/
