@@ -113,7 +113,7 @@ class MOTEvaluatorPublic:
                 frame_id = info_imgs[2].item()
                 video_id = info_imgs[3].item()
                 img_file_name = info_imgs[4]
-                video_name = img_file_name[0].split('/')[0]
+                video_name = os.path.dirname(img_file_name[0]).split("/")[-1]
                 if video_name not in video_names:
                     video_names[video_id] = video_name
                 if frame_id == 1:
@@ -249,7 +249,7 @@ class MOTEvaluatorPublic:
                 frame_id = info_imgs[2].item()
                 video_id = info_imgs[3].item()
                 img_file_name = info_imgs[4]
-                video_name = img_file_name[0].split('/')[0]
+                video_name = os.path.dirname(img_file_name[0]).split("/")[-1]
                 img_id = int(img_file_name[0].split('/')[-1].split(".")[0])
 
                 if video_name not in public_dets:
@@ -399,7 +399,7 @@ class MOTEvaluatorPublic:
                 frame_id = info_imgs[2].item()
                 video_id = info_imgs[3].item()
                 img_file_name = info_imgs[4]
-                video_name = img_file_name[0].split('/')[0]
+                video_name = os.path.dirname(img_file_name[0]).split("/")[-1]
 
                 if video_name not in video_names:
                     video_names[video_id] = video_name
@@ -521,7 +521,7 @@ class MOTEvaluatorPublic:
                 frame_id = info_imgs[2].item()
                 video_id = info_imgs[3].item()
                 img_file_name = info_imgs[4]
-                video_name = img_file_name[0].split('/')[0]
+                video_name = os.path.dirname(img_file_name[0]).split("/")[-1]
 
                 if video_name not in video_names:
                     # if "FRCNN" in video_name:

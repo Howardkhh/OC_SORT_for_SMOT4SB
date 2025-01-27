@@ -106,7 +106,7 @@ class MOTEvaluator:
                 frame_id = info_imgs[2].item()
                 video_id = info_imgs[3].item()
                 img_file_name = info_imgs[4]
-                video_name = img_file_name[0].split('/')[0]
+                video_name = os.path.dirname(img_file_name[0]).split("/")[-1]
 
                 if video_name not in video_names:
                     video_names[video_id] = video_name
@@ -229,7 +229,7 @@ class MOTEvaluator:
                 frame_id = info_imgs[2].item()
                 video_id = info_imgs[3].item()
                 img_file_name = info_imgs[4]
-                video_name = img_file_name[0].split('/')[0]
+                video_name = os.path.dirname(img_file_name[0]).split("/")[-1]
                 
                 is_time_record = cur_iter < len(self.dataloader) - 1
                 if is_time_record:
