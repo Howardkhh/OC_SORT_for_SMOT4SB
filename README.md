@@ -24,9 +24,9 @@ All usage guidelines are documented in the **SMOT4SB baseline repository**. Plea
 
 ---
 ## 📜 Original README
-
 For the original OC_SORT documentation, please refer to the following link:
 🔗 Original OC_SORT [README](README_origin.md)
+
 ---
 
 ## 📝 License
