@@ -23,6 +23,11 @@ All usage guidelines are documented in the **SMOT4SB baseline repository**. Plea
 - Updates and modifications are managed in alignment with the **SMOT4SB project**.
 
 ---
+## 📜 Original README
+
+For the original OC_SORT documentation, please refer to the following link:
+🔗 Original OC_SORT [README](README_origin.md)
+---
 
 ## 📝 License
 This repository is a modified version of **OC_SORT**, originally developed by **Yifu Zhang**, and follows the same MIT License.
