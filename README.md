@@ -1,6 +1,6 @@
 # OC_SORT (Customized for SMOT4SB)
 
-This repository is a customized fork of [OC_SORT_for_SMOT4SB](https://github.com/IIM-TTIJ/OC_SORT_for_SMOT4SB) and is used as a submodule in the **SMOT4SB baseline code**.  
+This repository is a customized fork of [OC_SORT](https://github.com/noahcao/OC_SORT) and is used as a submodule in the **SMOT4SB baseline code**.  
 
 For usage instructions, please refer to the **SMOT4SB baseline repository**:  
 🔗 [SMOT4SB Baseline Code](https://github.com/IIM-TTIJ/MVA2025-SMOT4SB)
