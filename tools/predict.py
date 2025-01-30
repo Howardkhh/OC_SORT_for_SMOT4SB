@@ -1,20 +1,22 @@
 import os
 import os.path as osp
-import torch
+from pathlib import Path
 
+import torch
 from loguru import logger
 
+from tools.demo_track import Predictor
+from trackers.ocsort_tracker.ocsort import OCSort
+from trackers.tracking_utils.timer import Timer
 from yolox.data.data_augment import preproc
 from yolox.exp import get_exp
 from yolox.utils import fuse_model, get_model_info, postprocess
 from yolox.utils.visualize import plot_tracking
-from trackers.ocsort_tracker.ocsort import OCSort
-from trackers.tracking_utils.timer import Timer
-from tools.demo_track import Predictor
 
 IMAGE_EXT = [".jpg", ".jpeg", ".webp", ".bmp", ".png"]
 
 from utils.args import make_parser
+
 
 def get_video_image_dict(root_path):
     video_image_dict = {}
@@ -60,7 +62,7 @@ def predict_videos(predictor, res_folder, args):
                         online_tlwhs.append(tlwh)
                         online_ids.append(tid)
                         results.append(
-                            f"{frame_id},{tid},{tlwh[0]:.2f},{tlwh[1]:.2f},{tlwh[2]:.2f},{tlwh[3]:.2f},1.0,-1,-1,-1\n"
+                            f"{frame_id},{tid},{tlwh[0]:.2f},{tlwh[1]:.2f},{tlwh[2]:.2f},{tlwh[3]:.2f},1,1,1\n"
                         )
                 timer.toc()
             else:
@@ -78,12 +80,15 @@ def predict_videos(predictor, res_folder, args):
 def main(exp, args):
     if not args.expn:
         args.expn = exp.exp_name
+    
+    if not args.path:
+        raise ValueError("Please specify the path to the subset directory")
 
     output_dir = osp.join(exp.output_dir, args.expn)
     os.makedirs(output_dir, exist_ok=True)
 
     if args.save_result:
-        res_folder = osp.join(output_dir, "results")
+        res_folder = osp.join(output_dir, "predictions", Path(args.path).stem)
         os.makedirs(res_folder, exist_ok=True)
 
     if args.trt:
