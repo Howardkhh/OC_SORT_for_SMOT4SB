@@ -43,10 +43,10 @@ def predict_videos(predictor, res_folder, args):
         video_image_dict = get_video_image_dict(args.path)
     else:
         raise ValueError(f"args.path must be a directory, but got {args.path}")
-    tracker = OCSort(det_thresh=args.track_thresh, iou_threshold=args.iou_thresh, use_byte=args.use_byte)
-    timer = Timer()
 
     for video_name, files in video_image_dict.items():
+        tracker = OCSort(det_thresh=args.track_thresh, iou_threshold=args.iou_thresh, use_byte=args.use_byte)
+        timer = Timer()
         results = []
         for frame_id, img_path in enumerate(files, 1):
             outputs, img_info = predictor.inference(img_path, timer)
