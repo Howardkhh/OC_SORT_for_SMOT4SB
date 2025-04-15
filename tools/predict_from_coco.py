@@ -67,7 +67,7 @@ def predict_videos(predictor, res_folder, args):
         raise ValueError(f"args.path must be a directory, but got {args.path}")
 
     for video_name, files in video_image_dict.items():
-        tracker = OCSort(det_thresh=args.track_thresh, iou_threshold=args.iou_thresh, use_byte=args.use_byte)
+        tracker = OCSort(det_thresh=args.track_thresh, iou_threshold=args.iou_thresh, use_byte=args.use_byte, use_nwd=args.use_nwd)
         results = []
         for frame_id, img_name in enumerate(files, 1):
             video_image = f"{video_name}/{img_name}"

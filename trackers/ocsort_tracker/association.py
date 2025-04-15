@@ -1,6 +1,26 @@
 import os
 import numpy as np
 
+def nwd_batch(bboxes1, bboxes2, constant=24):
+    bboxes2 = np.expand_dims(bboxes2, 0)
+    bboxes1 = np.expand_dims(bboxes1, 1)
+
+    cx1, cy1, cx2, cy2 = (bboxes1[..., 0] + bboxes1[..., 2]) / 2, \
+                         (bboxes1[..., 1] + bboxes1[..., 3]) / 2, \
+                         (bboxes2[..., 0] + bboxes2[..., 2]) / 2, \
+                         (bboxes2[..., 1] + bboxes2[..., 3]) / 2
+    c_dist = (cx1 - cx2) ** 2 + (cy1 - cy2) ** 2 + 1e-7
+
+    w1, h1, w2, h2 = bboxes1[..., 2] - bboxes1[..., 0] + 1e-7, \
+                     bboxes1[..., 3] - bboxes1[..., 1] + 1e-7, \
+                     bboxes2[..., 2] - bboxes2[..., 0] + 1e-7, \
+                     bboxes2[..., 3] - bboxes2[..., 1] + 1e-7
+    wh_dist = ((w1 - w2) ** 2 + (h1 - h2) ** 2) / 4
+    
+    wasserstein_2 = c_dist + wh_dist
+    normalized_wasserstein = np.exp(-np.sqrt(wasserstein_2)/constant)
+    return normalized_wasserstein
+
 
 def iou_batch(bboxes1, bboxes2):
     """
@@ -241,7 +261,7 @@ def associate_detections_to_trackers(detections,trackers,iou_threshold = 0.3):
     return matches, np.array(unmatched_detections), np.array(unmatched_trackers)
 
 
-def associate(detections, trackers, iou_threshold, velocities, previous_obs, vdc_weight):    
+def associate(detections, trackers, iou_threshold, velocities, previous_obs, vdc_weight, use_nwd=False):    
     if(len(trackers)==0):
         return np.empty((0,2),dtype=int), np.arange(len(detections)), np.empty((0,5),dtype=int)
 
@@ -257,7 +277,10 @@ def associate(detections, trackers, iou_threshold, velocities, previous_obs, vdc
     valid_mask = np.ones(previous_obs.shape[0])
     valid_mask[np.where(previous_obs[:,4]<0)] = 0
     
-    iou_matrix = iou_batch(detections, trackers)
+    if not use_nwd:
+        iou_matrix = iou_batch(detections, trackers)
+    else:
+        iou_matrix = nwd_batch(detections, trackers)
     scores = np.repeat(detections[:,-1][:, np.newaxis], trackers.shape[0], axis=1)
     # iou_matrix = iou_matrix * scores # a trick sometiems works, we don't encourage this
     valid_mask = np.repeat(valid_mask[:, np.newaxis], X.shape[1], axis=1)
