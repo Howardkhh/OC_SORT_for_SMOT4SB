@@ -169,11 +169,12 @@ ASSO_FUNCS = {  "iou": iou_batch,
                 "giou": giou_batch,
                 "ciou": ciou_batch,
                 "diou": diou_batch,
-                "ct_dist": ct_dist}
+                "ct_dist": ct_dist,
+                "nwd": nwd_batch}
 
 
 class OCSort(object):
-    def __init__(self, det_thresh, max_age=30, min_hits=3, 
+    def __init__(self, det_thresh, max_age=20, min_hits=10, 
         iou_threshold=0.3, delta_t=3, asso_func="iou", inertia=0.2, use_byte=False, use_nwd=False):
         """
         Sets key parameters for SORT
